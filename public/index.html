@@ -38,31 +38,50 @@
                     </form>
                 </div>
                 <div class="col-md-6 col-md-offset-3">
-                    <form class="Search for your plants">
+                    <form class="Search for your plants"><h3>Plant Search</h3></form>
                         <div class="form-group">
-                            <label for="plantClimate">Your Climate</label>
-                            <input type="userInput" class="form-control" id="climate-input" placeholder="climate">
+                            <select class="form-select" aria-label="Default select example">
+                                <option selected>Your Climate</option>
+                                <option value="1">Tropical</option>
+                                <option value="2">Moist Sub-Tropical</option>
+                                <option value="3">Moist Continental</option>
+                                <option value="4">Highlands</option>
+                              </select>
                         </div>
                         <div class="form-group">
-                            <label for="plantSeason">Current Season</label>
-                            <input type="userInput" class="form-control" id="season-input" placeholder="season">
+                            <select class="form-select" aria-label="Default select example">
+                                <option selected>Current Season</option>
+                                <option value="1">Spring</option>
+                                <option value="2">Summer</option>
+                                <option value="3">Fall</option>
+                                <option value="4">Winter</option>
+                            </select>
                         </div>
                         <div class="form-group">
-                            <label for="experience">How experienced are you?</label>
-                            <input type="userInput" class="form-control" id="experience-input" placeholder="experience">
+                            <select class="form-select" aria-label="Default select example">
+                                <option selected>Planting Experience</option>
+                                <option value="1">Beginner</option>
+                                <option value="2">Intermediate</option>
+                                <option value="3">Experienced</option>
+                            </select>
                         </div>
                         <div class="form-group">
-                            <label for="maintenance">Preferred maintenance level</label>
-                            <input type="userInput" class="form-control" id="maintenance-input" placeholder="level">
+                            <select class="form-select" aria-label="Default select example">
+                                <option selected>Indoor or Outdoor</option>
+                                <option value="1">Indoor</option>
+                                <option value="2">Outdoor</option>
+                            </select>
                         </div>
                         <div class="form-group">
-                            <label for="plantPlacement">Indoor or Outdoor</label>
-                            <input type="userInput" class="form-control" id="place-input" placeholder="place">
-                        </div>
-                        <div class="form-group">
-                            <label for="plantType">What type of plant?</label>
-                            <input type="userInput" class="form-control" id="plant-input" placeholder="plants">
-                        </div>
+                            <select class="form-select" aria-label="Default select example">
+                                <option selected>Type of plant</option>
+                                <option value="1">Herb</option>
+                                <option value="2">Fruit</option>
+                                <option value="3">Flower</option>
+                                <option value="4">Vegetable</option>
+                                <option value="4">Plant</option>
+                                <option value="4">Tree</option>
+                            </select>
                     </form>
                 </div>
             </div>
