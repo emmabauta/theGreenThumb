@@ -1,9 +1,9 @@
 {
   "development": {
     "username": "root",
-    "password": "MyNewPass",
-    "database": "passport_demo",
-    "host": "127.0.0.1",
+    "password": "fUnny-p14n0",
+    "database": "green_thumb",
+    "host": "localhost",
     "dialect": "mysql"
   },
   "test": {
