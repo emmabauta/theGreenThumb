@@ -1,6 +1,7 @@
 // Requiring our models and passport as we've configured it
 let db = require("../models");
 let passport = require("../config/passport");
+const { Sequelize } = require('sequelize');
 
 module.exports = function(app) {
   // Using the passport.authenticate middleware with our local strategy.
@@ -46,4 +47,19 @@ module.exports = function(app) {
       });
     }
   });
+
+  // The :search is what the user types in
+  app.get("/api/search/:search", function(req, res) {
+    db.Plant.findAll({
+      // This is going to match roughly against the database. Allows user to make typing errors
+      where: Sequelize.literal(`MATCH (Common_name) AGAINST (:name)`),
+      replacements: {
+        name: req.params.search
+      }
+    }).then(function(mySearch) {
+      // Logs out the response here
+      console.log(mySearch)
+      res.json(mySearch);
+    });
+  })
 };
