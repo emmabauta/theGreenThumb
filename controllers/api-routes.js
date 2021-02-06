@@ -58,7 +58,7 @@ module.exports = function(app) {
       }
     }).then(function(mySearch) {
       // Logs out the response here
-      console.log(mySearch)
+      // console.log(mySearch)
       res.json(mySearch);
     });
   })

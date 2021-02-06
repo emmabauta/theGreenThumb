@@ -13,13 +13,29 @@ $(document).ready(function() {
 
 
   searchForm.on("submit", function(e) {
-      e.preventDefault()
-      let searchValue =  $("input#name-search").val().trim()
-    $.get("/api/search/" + searchValue, function(data) {
-      for (let i in data.length) {
-        console.log(data[i].image_url)
-      }
-    })
-    })
+    e.preventDefault()
+    let searchValue =  $("input#name-search").val().trim()
+  $.get("/api/search/" + searchValue, function(data) {
+    console.log(data);
+    renderPlants(data)
+  
+  })
+  })
 
+  function renderPlants(data) {
+    if (data.length !== 0) {
+  
+      $("#stats").empty();
+      $("#stats").show();
+  
+      for (var i = 0; i < data.length; i++) {
+        var div = $("<div>");
+  
+        div.append("<h2>" + data[i].scientific_name + "</h2>");   
+        div.append("<p>" + data[i].Common_name + "</p>");   
+        div.append(`<img src="${data[i].image_url}" width="300" height="350">`);   
+        $("#stats").append(div);
+      }
+    }
+  }
 });
