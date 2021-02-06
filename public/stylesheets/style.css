@@ -13,4 +13,8 @@ background-size: cover;
   background: url(./signin.jpg);
   background-repeat: no-repeat;
   background-size: cover;
+} 
+
+h1 {
+  color: whitesmoke;
 }
