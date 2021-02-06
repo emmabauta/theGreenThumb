@@ -1,4 +1,16 @@
 form.signup,
 form.login {
   margin-top: 50px;
+} 
+
+.main-bg {
+background: url(./main.jpg);
+background-repeat: no-repeat;
+background-size: cover;
+}
+
+.signin-bg {
+  background: url(./signin.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
 }
