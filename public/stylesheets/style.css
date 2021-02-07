@@ -21,8 +21,12 @@ body {
     background: url('../images/loginPlants.jpg') no-repeat center center fixed
   }
 
+  .signup-bg  {
+    background: url('../images/signupPlants.jpg') no-repeat center center fixed
+  }
+
  .card { 
-   opacity: 0.75;
+   opacity: 0.70;
  }
 
  
