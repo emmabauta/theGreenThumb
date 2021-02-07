@@ -4,12 +4,14 @@ $(document).ready(function() {
   
   
   let searchForm = $("form.search")
-  let growth_habit = ["Tree", "Forb/herb", "Vine", "Subshrub", "Graminoid", "Shrub"]
-  let growth_period = ["Spring", "Summer", "Year Round", "Fall", "Winter"]
-  let foliage_color = ["Green", "Dark Green", "Gray-Green", "Red", "White-Gray", "Yellow-Green"]
-  let shade_tolerance = ["Intermediate", "Intolerant", "Tolerant"]
-  let bloom_period = ["Early Spring", "Mid Spring", "Late Spring", "Spring", "Early Summer", "Mid Summer", "Late Summer", "Summer", "Fall", "Winter", "Late Winter", "Indeterminate"]
-
+  let filters = {
+    growth_habit: ["Tree", "Forb/herb", "Vine", "Subshrub", "Graminoid", "Shrub"],
+    growth_period: ["Spring", "Summer", "Year Round", "Fall", "Winter"],
+    flower_color: ["Blue", "Brown", "Green", "Orange", "Purple", "Red", "White", "Yellow"],
+    foliage_color: ["Green", "Dark Green", "Gray-Green", "Red", "White-Gray", "Yellow-Green"],
+    shade_tolerance: ["Intermediate", "Intolerant", "Tolerant"],
+    bloom_period: ["Early Spring", "Mid Spring", "Late Spring", "Spring", "Early Summer", "Mid Summer", "Late Summer", "Summer", "Fall", "Winter", "Late Winter", "Indeterminate"]
+  }
   // This file just does a GET request to figure out which user is logged in
   // and updates the HTML on the page
   $.get("/api/user_data").then(function(data) {
@@ -17,16 +19,24 @@ $(document).ready(function() {
   });
 
   function renderFilters() {
-    let collection = []
-    let container = $("<ul>");
+    console.log("Heloo worllllddd")
 
-    for (let i = 0; i < growth_habit.length; i++) {
+    for (i in filters) {
+      grid = $('<div col-md-2>')
 
-      let newCheckbox = `<li class="checkbox"><label><input type="checkbox" value="${growth_habit[i]}">${growth_habit[i]}</label></li>`;
+      column = filters[i]
+      for (index in column) {
+        parameters = column[index]
+        console.log(parameters)
+        let newCheckbox = `<div class="checkbox"><label><input type="checkbox" value="${parameters}">${parameters}</label></div>`;
 
-      container.append(newCheckbox)
+        grid.append(newCheckbox)
+        
+      }
+      $("#filter").append(grid)
+      
     }
-    $(".filter").append(container)
+    
   }
 
   searchForm.on("submit", function(e) {
