@@ -3,9 +3,8 @@ form.login {
   margin-top: 50px;
 }
 
-
 body {
-  background: url('../images/loginPlants.jpg') no-repeat center center fixed;
+
   -webkit-background-size: cover;
   -moz-background-size: cover;
   background-size: cover;
@@ -17,8 +16,13 @@ body {
   border-color: black;
   
   }
- .card { 
-   opacity: 0.8;
 
+  .login-bg  {
+    background: url('../images/loginPlants.jpg') no-repeat center center fixed
+  }
+
+ .card { 
+   opacity: 0.75;
+ }
 
  
