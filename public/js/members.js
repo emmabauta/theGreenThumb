@@ -4,6 +4,11 @@ $(document).ready(function() {
   
   
   let searchForm = $("form.search")
+  let growth_habit = ["Tree", "Forb/herb", "Vine", "Subshrub", "Graminoid", "Shrub"]
+  let growth_period = ["Spring", "Summer", "Year Round", "Fall", "Winter"]
+  let foliage_color = ["Green", "Dark Green", "Gray-Green", "Red", "White-Gray", "Yellow-Green"]
+  let shade_tolerance = ["Intermediate", "Intolerant", "Tolerant"]
+  let bloom_period = ["Early Spring", "Mid Spring", "Late Spring", "Spring", "Early Summer", "Mid Summer", "Late Summer", "Summer", "Fall", "Winter", "Late Winter", "Indeterminate"]
 
   // This file just does a GET request to figure out which user is logged in
   // and updates the HTML on the page
@@ -11,6 +16,18 @@ $(document).ready(function() {
     $(".member-name").text(data.email);
   });
 
+  function renderFilters() {
+    let collection = []
+    let container = $("<ul>");
+
+    for (let i = 0; i < growth_habit.length; i++) {
+
+      let newCheckbox = `<li class="checkbox"><label><input type="checkbox" value="${growth_habit[i]}">${growth_habit[i]}</label></li>`;
+
+      container.append(newCheckbox)
+    }
+    $(".filter").append(container)
+  }
 
   searchForm.on("submit", function(e) {
     e.preventDefault()
@@ -38,4 +55,10 @@ $(document).ready(function() {
       }
     }
   }
+
+  
+  renderFilters()
+
+
+
 });
