@@ -2,3 +2,23 @@ form.signup,
 form.login {
   margin-top: 50px;
 }
+
+
+body {
+  background: url('../images/loginPlants.jpg') no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
+  -o-background-size: cover;
+  padding-top: 15px;
+  padding-bottom: 30px;
+  width: 100%;
+  height: 100%;
+  border-color: black;
+  
+  }
+ .card { 
+   opacity: 0.8;
+
+
+ 
