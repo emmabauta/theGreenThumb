@@ -2,3 +2,10 @@ form.signup,
 form.login {
   margin-top: 50px;
 }
+
+
+.scroll {
+  max-height: 300px;
+  overflow-y: auto;
+  overflow-x: auto;
+}
