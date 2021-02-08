@@ -9,6 +9,8 @@ module.exports = function(app) {
   // Using the passport.authenticate middleware with our local strategy.
   // If the user has valid login credentials, send them to the members page.
   // Otherwise the user will be sent an error
+  let searchedName;
+
   app.post("/api/login", passport.authenticate("local"), function(req, res) {
     res.json(req.user);
   });
@@ -52,9 +54,11 @@ module.exports = function(app) {
 
   // The :search is what the user types in
   app.get("/api/search/:search", function(req, res) {
+
+    searchedName = req.params.search
     db.Plant.findAll({
       // This is going to match roughly against the database. Allows user to make typing errors
-      where: Sequelize.literal(`MATCH (Common_name) AGAINST (:name)`),
+      where: Sequelize.literal(`MATCH (common_name) AGAINST (:name)`),
       replacements: {
         name: req.params.search
       }
@@ -66,6 +70,9 @@ module.exports = function(app) {
   })
 
   app.post("/api/filter", function(req, res) {
+
+  
+    console.log(searchedName);
     
     filters = req.body
 
@@ -108,6 +115,10 @@ module.exports = function(app) {
   function createQuery(filters) {
     let query = 'SELECT * FROM green_thumb.plants WHERE ';
 
+    if (searchedName) {
+      query += `(MATCH (common_name) AGAINST ("${searchedName}")) AND `;
+    }
+
     for (let index = 0; index < filters.length; index++) {
       myObj = filters[index]
       for (key in myObj) {
@@ -115,15 +126,15 @@ module.exports = function(app) {
         valueArray = myObj[key]
 
         for (value in valueArray) {
-
+          if (valueArray[value] == valueArray[0]) {
+            query += '('
+          }
           if ((valueArray[value] == valueArray[valueArray.length - 1]) && (myObj == filters[filters.length - 1])) {
             query += `${key} = "${valueArray[value]}")`;
             return query;
           }
           else {
-            if (valueArray[value] == valueArray[0]) {
-              query += '('
-            }
+            
             if (valueArray[value] == valueArray[valueArray.length - 1]) {
               query += `${key} = "${valueArray[value]}") `;
               query += 'AND ';
