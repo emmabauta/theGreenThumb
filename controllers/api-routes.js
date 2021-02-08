@@ -2,6 +2,8 @@
 let db = require("../models");
 let passport = require("../config/passport");
 const { Sequelize } = require('sequelize');
+const { QueryTypes } = require('sequelize');
+
 
 module.exports = function(app) {
   // Using the passport.authenticate middleware with our local strategy.
@@ -62,4 +64,81 @@ module.exports = function(app) {
       res.json(mySearch);
     });
   })
+
+  app.post("/api/filter", function(req, res) {
+    
+    filters = req.body
+
+    toDelete = []
+    
+    
+    for (i in filters) {
+      console.log(i)
+      for (index in filters[i]) {
+        console.log(filters[i])
+
+        if (filters[i][index].length < 1) {
+          toDelete.push(i)
+        }
+      }
+    }
+
+    toDelete.sort((a, b) => b - a)
+
+    for (i in toDelete) {
+
+      filters.splice(toDelete[i], 1)
+    }
+    console.log(filters)
+    
+    myQuery = createQuery(filters)
+    myQuery = myQuery.replace(/\s*$/,"")
+    
+    myQuery += ';'
+    console.log(myQuery);
+    
+    db.sequelize.query(myQuery, { type: QueryTypes.SELECT }).then((data) => {
+      console.log(data);
+    })
+
+    
+  })
+
+
+  function createQuery(filters) {
+    let query = 'SELECT * FROM green_thumb.plants WHERE ';
+
+    for (let index = 0; index < filters.length; index++) {
+      myObj = filters[index]
+      for (key in myObj) {
+
+        valueArray = myObj[key]
+
+        for (value in valueArray) {
+
+          if ((valueArray[value] == valueArray[valueArray.length - 1]) && (myObj == filters[filters.length - 1])) {
+            query += `${key} = "${valueArray[value]}")`;
+            return query;
+          }
+          else {
+            if (valueArray[value] == valueArray[0]) {
+              query += '('
+            }
+            if (valueArray[value] == valueArray[valueArray.length - 1]) {
+              query += `${key} = "${valueArray[value]}") `;
+              query += 'AND ';
+            }
+            else {
+              query += `${key} = "${valueArray[value]}" `;
+              query += 'OR ';
+            }
+            
+          }
+
+        }
+      }
+    }
+
+  }
+
 };
