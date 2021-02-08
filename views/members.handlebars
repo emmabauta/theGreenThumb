@@ -1,4 +1,5 @@
-<nav class="navbar navbar-default">
+{{!-- Navabr --}}
+<nav class="navbar navbar-default bg-dark">
   <div class="container-fluid">
     <div class="navbar-header">
       <a class="navbar-brand" href="/logout">
@@ -7,34 +8,46 @@
     </div>
   </div>
 </nav>
+
+{{!-- Jumbotron --}}
 <div class="header">
-    <div class="jumbotron" style="padding: 20px">
-      <h1 style="text-align: center; padding: 10px; color: #2E8B57; font-family: 'Pacifico', cursive;">The Green Thumb
-      </h1>
-    </div>
+  <div class="jumbotron" style="padding: 20px">
+    <h1 style="text-align: center; padding: 10px; color: #2E8B57; font-family: 'Pacifico', cursive;">The Green Thumb
+    </h1>
   </div>
-<div class="container"style="font-family: serif;">
+</div>
+
+{{!-- Whole Page Container --}}
+<div class="container" style="font-family: serif;">
   <div class="row">
-    <div class="col-md-6">
+    {{!-- Welcome User and Filter --}}
+    <div class="col-md-6 border border-dark">
       <h2>Welcome <span class="member-name"></span></h2>
-      <form class="search">
-        <div class="col-md-6">
+      <div class="col-md-6">
+        <form class="search">
           <input type="name-search" class="searchValue" id="name-search" placeholder="Search by name...">
           <button type="submit" class="btn btn-default sumbit">Plant</button>
-        </div>
-      </form>
-      <div class="row">
-        <form class="filter">
-          <div class="row" id="filter">
-
-          </div>
-          <button type="submit" class="btn btn-default sumbit">Apply Filters</button>
         </form>
       </div>
+      {{!-- Filter --}}
+      <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false"
+        aria-controls="collapseExample">
+        <i class="fas fa-filter"></i>
+      </a>
+      <div class="collapse" id="collapseExample">
+        <div class="card card-body">
+          <button type="submit" class="btn btn-default sumbit">Apply Filters</button>
+          <form class="filter">
+            <div class="row" id="filter">
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
-    <div class="col-md-6" >
+{{!-- Garden column --}}
+    <div class="col-md-6">
       <div class="album py-5 bg-light" id="gardendiv-bg">
-        <div class="container" >
+        <div class="container">
           <div class="row">
             <h3 style="color:white;">My Garden</h3>
             <div class="row">
@@ -47,6 +60,7 @@
                   </div>
                 </div>
               </div>
+              {{!-- User Selection Placeholders --}}
               <div class="col-md-4">
                 <div class="card mb-4 box-shadow">
                   <img class="card-img-top" data-src="" alt="">
@@ -98,13 +112,15 @@
           </div>
         </div>
       </div>
-      <div class="row" <div class="card-body">
-        <div class="well" id="stats">
+      <br>
+      {{!-- Garden Item Search --}}
+      <div class="row" class="card-body">
+        <div class="scroll" id="stats">
           <h2 id="title">Plants:</h2>
         </div>
       </div>
     </div>
   </div>
 </div>
-</div>
+
 <script type="text/javascript" src="js/members.js"></script>
