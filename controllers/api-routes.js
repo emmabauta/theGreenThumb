@@ -2,11 +2,15 @@
 let db = require("../models");
 let passport = require("../config/passport");
 const { Sequelize } = require('sequelize');
+const { QueryTypes } = require('sequelize');
+
 
 module.exports = function(app) {
   // Using the passport.authenticate middleware with our local strategy.
   // If the user has valid login credentials, send them to the members page.
   // Otherwise the user will be sent an error
+  let searchedName;
+
   app.post("/api/login", passport.authenticate("local"), function(req, res) {
     res.json(req.user);
   });
@@ -50,9 +54,11 @@ module.exports = function(app) {
 
   // The :search is what the user types in
   app.get("/api/search/:search", function(req, res) {
+
+    searchedName = req.params.search
     db.Plant.findAll({
       // This is going to match roughly against the database. Allows user to make typing errors
-      where: Sequelize.literal(`MATCH (Common_name) AGAINST (:name)`),
+      where: Sequelize.literal(`MATCH (common_name) AGAINST (:name)`),
       replacements: {
         name: req.params.search
       }
@@ -62,4 +68,88 @@ module.exports = function(app) {
       res.json(mySearch);
     });
   })
+
+  app.post("/api/filter", function(req, res) {
+
+  
+    console.log(searchedName);
+    
+    filters = req.body
+
+    toDelete = []
+    
+    
+    for (i in filters) {
+      console.log(i)
+      for (index in filters[i]) {
+        console.log(filters[i])
+
+        if (filters[i][index].length < 1) {
+          toDelete.push(i)
+        }
+      }
+    }
+
+    toDelete.sort((a, b) => b - a)
+
+    for (i in toDelete) {
+
+      filters.splice(toDelete[i], 1)
+    }
+    console.log(filters)
+    
+    myQuery = createQuery(filters)
+    myQuery = myQuery.replace(/\s*$/,"")
+    
+    myQuery += ';'
+    console.log(myQuery);
+    
+    db.sequelize.query(myQuery, { type: QueryTypes.SELECT }).then((data) => {
+      console.log(data);
+    })
+
+    
+  })
+
+
+  function createQuery(filters) {
+    let query = 'SELECT * FROM green_thumb.plants WHERE ';
+
+    if (searchedName) {
+      query += `(MATCH (common_name) AGAINST ("${searchedName}")) AND `;
+    }
+
+    for (let index = 0; index < filters.length; index++) {
+      myObj = filters[index]
+      for (key in myObj) {
+
+        valueArray = myObj[key]
+
+        for (value in valueArray) {
+          if (valueArray[value] == valueArray[0]) {
+            query += '('
+          }
+          if ((valueArray[value] == valueArray[valueArray.length - 1]) && (myObj == filters[filters.length - 1])) {
+            query += `${key} = "${valueArray[value]}")`;
+            return query;
+          }
+          else {
+            
+            if (valueArray[value] == valueArray[valueArray.length - 1]) {
+              query += `${key} = "${valueArray[value]}") `;
+              query += 'AND ';
+            }
+            else {
+              query += `${key} = "${valueArray[value]}" `;
+              query += 'OR ';
+            }
+            
+          }
+
+        }
+      }
+    }
+
+  }
+
 };

@@ -6,39 +6,39 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.TEXT,
       defaultValue: null,
     },
-    Common_name: {
+    common_name: {
       type: DataTypes.TEXT,
       defaultValue: null,
     },
-    State_and_Province: {
+    state_and_province: {
         type: DataTypes.TEXT,
         defaultValue: null,
     },
-    Growth_Habit: {
+    growth_habit: {
         type: DataTypes.TEXT,
         defaultValue: null,
     },
-    Plant_Guides: {
+    plant_guides: {
         type: DataTypes.TEXT,
         defaultValue: null,
     },
-    Active_Growth_Period: {
+    active_growth_period: {
         type: DataTypes.TEXT,
         defaultValue: null,
     },
-    Flower_Color: {
+    flower_color: {
         type: DataTypes.TEXT,
         defaultValue: null,
     },
-    Foliage_Color: {
+    foliage_color: {
         type: DataTypes.TEXT,
         defaultValue: null,
     },
-    Shade_Tolerance: {
+    shade_tolerance: {
         type: DataTypes.TEXT,
         defaultValue: null,
     },
-    Bloom_Period: {
+    bloom_period: {
         type: DataTypes.TEXT,
         defaultValue: null,
     },
