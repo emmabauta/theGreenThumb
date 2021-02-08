@@ -1,3 +1,4 @@
+{{!-- Navbar --}}
 <nav class="navbar navbar-default">
   <div class="container-fluid">
     <div class="navbar-header">
@@ -7,30 +8,47 @@
     </div>
   </div>
 </nav>
+
+{{!--Container Wrapping the Page --}}
 <div class="container">
+  {{!-- Row dividing User and Search--}}
   <div class="row">
-    <div class="col-md-6 col-md-offset-3">
+    {{!-- User Column --}}
+    <div class="col-md-6 ">
       <h2>Welcome <span class="member-name"></span></h2>
+    </div>
+    {{!-- Search Column --}}
+    <div class="col-md-4">
       <form class="search">
-        <div class="col-md-6">
-          <input type="name-search" class="searchValue" id="name-search" placeholder="Search by name...">
-          <button type="submit" class="btn btn-default sumbit">Plant</button>
-        </div>
+        <input type="name-search" class="searchValue" id="name-search" placeholder="Search by name...">
+        <button type="submit" class="btn btn-default sumbit">Plant</button>
       </form>
-    </div>
-  </div>
-    <div class="row">
-
-        <form class="filter">
-          <div class="row" id="filter">
-
-          </div>
-          <button type="submit" class="btn btn-default sumbit">Apply Filters</button>
-        </form>
-    </div>
       <div class="card-body">
         <div class="well" id="stats">
           <h2 id="title">Plants:</h2>
         </div>
       </div>
-    <script type="text/javascript" src="js/members.js"></script>
+    </div>
+
+    {{!-- Filters --}}
+    <div class="col-md-2">
+
+      <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false"
+        aria-controls="collapseExample">
+        <i class="fas fa-filter"></i>
+      </a>
+      <div class="collapse" id="collapseExample">
+        <div class="card card-body">
+          <form class="filter">
+            <div class="row" id="filter">
+            </div>
+            <button type="submit" class="btn btn-default sumbit">Apply Filters</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script type="text/javascript" src="js/members.js"></script>

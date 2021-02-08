@@ -106,12 +106,24 @@ $(document).ready(function() {
       $("#stats").show();
   
       for (var i = 0; i < data.length; i++) {
-        var div = $("<div>");
-  
-        div.append("<h2>" + data[i].scientific_name + "</h2>");   
-        div.append("<p>" + data[i].Common_name + "</p>");   
-        div.append(`<img src="${data[i].image_url}" width="300" height="350">`);   
-        $("#stats").append(div);
+        var div = $("<div>").attr("class", "border border-dark");
+
+        
+        div.append("<h2> Common Name: " + data[i].common_name + "</h2>");
+        div.append("<p> Scientific Name: " + data[i].scientific_name + "</p>");
+        div.append(`<img src="${data[i].image_url}" width="250" height="300">`);
+        // div.append("<p>" + data[i].State_and_Province + "</p>");
+        div.append("<p> Growth Habit " + data[i].growth_habit + "</p>");
+        // div.append("<p>" + data[i].Plant_Guides + "</p>");
+        div.append("<p> Active Growth Period " + data[i].active_growth_period + "</p>");
+        div.append("<p> Flower Color: " + data[i].flower_color + "</p>");
+        div.append("<p> Foliage Color: " + data[i].foliage_color + "</p>");
+        div.append("<p> Shade Tolerance: " + data[i].shade_tolerance + "</p>");
+        div.append("<p> Bloom Period: " + data[i].bloom_period + "</p>");
+        div.append("<button>" + "Add")
+        // <i class="fas fa-plus-square"></i>
+
+        $("#stats").append(div).append("<br>");
       }
     }
   }
