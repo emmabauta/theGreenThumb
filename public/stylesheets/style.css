@@ -2,3 +2,33 @@ form.signup,
 form.login {
   margin-top: 50px;
 }
+
+
+body {
+
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
+  -o-background-size: cover;
+  padding-top: 15px;
+  padding-bottom: 30px;
+  width: 100%;
+  height: 100%;
+  border-color: black;
+
+  }
+
+  .login-bg  {
+    background: url('../images/loginPlants.jpg') no-repeat center center fixed
+  }
+
+  .signup-bg  {
+    background: url('../images/signupPlants.jpg') no-repeat center center fixed
+  }
+
+ .card { 
+   opacity: 0.70;
+ }
+
+
+
