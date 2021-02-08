@@ -45,7 +45,9 @@ npm test
 ```
 
 ## Screenshots
-![screenshot1]( )
+![screenshot1](./public/images/signupScreen.png)
+
+![screenshot2](./public/images/loginScreen.png)
 
 
 ### Deployed App Heroku Link
