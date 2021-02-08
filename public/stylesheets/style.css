@@ -25,9 +25,14 @@ body {
     background: url('../images/signupPlants.jpg') no-repeat center center fixed
   }
 
+  #gardendiv-bg { 
+    background: url('../Images/soil.jpg')  center center fixed
+  }
+
  .card { 
    opacity: 0.70;
  }
+
 
 
 
