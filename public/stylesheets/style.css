@@ -33,5 +33,9 @@ body {
    opacity: 0.70;
  }
 
+ .scroll {
+  overflow: auto;
+  max-height: 600px;
+}
 
 
