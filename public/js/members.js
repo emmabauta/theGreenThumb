@@ -1,8 +1,8 @@
 $(document).ready(function() {
   console.log('member.js loaded')
 
-  
-  
+  let id;
+  let garden = $("#myGarden")
   let searchForm = $("form.search")
   let filterForm = $("form.filter")
   let filters = {
@@ -15,9 +15,19 @@ $(document).ready(function() {
   }
   // This file just does a GET request to figure out which user is logged in
   // and updates the HTML on the page
+
+
   $.get("/api/user_data").then(function(data) {
-    $(".member-name").text(data.email);
+      for (i in data) {
+        
+      }
+    
+    
   });
+
+
+
+  
 
   function renderFilters() {
     for (i in filters) {
@@ -39,7 +49,7 @@ $(document).ready(function() {
     }
   }
 
-  filterForm.on("submit", function(e) {
+  $(document).on("click", "#lookup", function(e) {
     e.preventDefault()
     let filtering = []
     let categories =[
@@ -69,6 +79,10 @@ $(document).ready(function() {
         }
       }
     }
+    let searchValue =  $("input#name-search").val().trim()
+    if (searchValue) {
+      categories.push(searchValue)
+    }
     $.ajax({
       url: "/api/filter",
       type: "POST",
@@ -76,20 +90,51 @@ $(document).ready(function() {
       data: JSON.stringify(categories),
       success: function(result) {
         console.log("Post complete")
+        renderPlants(result)
 
       }
     })
   })
 
-  searchForm.on("submit", function(e) {
-    e.preventDefault()
-    let searchValue =  $("input#name-search").val().trim()
-  $.get("/api/search/" + searchValue, function(data) {
-    console.log(data);
-    renderPlants(data)
+  // searchForm.on("submit", function(e) {
+  //   e.preventDefault()
+  //   let searchValue =  $("input#name-search").val().trim()
+  // $.get("/api/search/" + searchValue, function(data) {
+  //   console.log(data);
+  //   renderPlants(data)
   
-  })
-  })
+  // })
+  // });
+
+
+  $(document).on("click","#myGarden",function(e) {
+    e.preventDefault();
+ 
+    let addPlant = $(this).data("id")
+
+    $.get("/api/user_data").then(function(data) {
+
+      let newPlant = [
+        {user: data.id},
+        {toAdd: addPlant}
+      ]
+      $.ajax({
+        url: "/api/newPlant",
+        type: "POST",
+        contentType: "application/json",
+        data: JSON.stringify(newPlant),
+        success: function(result) {
+          console.log("Post complete")
+  
+        }
+      })
+    });
+
+});
+
+
+  
+
 
   function humanize(str) {
     var i, frags = str.split('_');
@@ -101,22 +146,25 @@ $(document).ready(function() {
 
   function renderPlants(data) {
     if (data.length !== 0) {
+
+      
   
       $("#stats").empty();
       $("#stats").show();
   
       for (var i = 0; i < data.length; i++) {
+
         var div = $("<div>");
   
         div.append("<h2>" + data[i].scientific_name + "</h2>");   
-        div.append("<p>" + data[i].Common_name + "</p>");   
-        div.append(`<img src="${data[i].image_url}" width="300" height="350">`);   
+        div.append("<p>" + data[i].common_name + "</p>");   
+        div.append(`<img src="${data[i].image_url}" width="300" height="350">`);
+        div.append(`<button type="button" data-id="${data[i].id}" id="myGarden" class="btn btn-default myGarden">Add to My Garden</button>`)
         $("#stats").append(div);
       }
     }
   }
 
-  
   renderFilters()
 
 
