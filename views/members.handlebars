@@ -1,38 +1,43 @@
+<body class="members-bg">
 {{!-- Navabr --}}
-<nav class="navbar navbar-default bg-dark">
+<nav class="navbar navbar-default ">
   <div class="container-fluid">
     <div class="navbar-header">
       <a class="navbar-brand" href="/logout">
         Logout
       </a>
     </div>
+    
   </div>
 </nav>
 
 {{!-- Jumbotron --}}
 <div class="header">
   <div class="jumbotron" style="padding: 20px">
-    <h1 style="text-align: center; padding: 10px; color: #2E8B57; font-family: 'Pacifico', cursive;">The Green Thumb
+    <h1 style="text-align: center; padding: 10px; color: #2E8B57; font-family: 'Pacifico', cursive; text-shadow: 2px 2px 5px white;
+}">The Green Thumb
     </h1>
   </div>
+  
 </div>
 
 {{!-- Whole Page Container --}}
 <div class="container" style="font-family: serif;">
   <div class="row">
     {{!-- Welcome User and Filter --}}
-    <div class="col-md-6 border border-dark">
+    <div class="col-md-5 border border-dark bg-light" id="welcome">
       <h2>Welcome <span class="member-name"></span></h2>
       <div class="col-md-6">
         <form class="search">
           <input type="name-search" class="searchValue" id="name-search" placeholder="Search by name...">
-          <button type="submit" class="btn btn-default sumbit">Plant</button>
+          <button type="submit" class="btn btn-dark sumbit">Plant</button>
         </form>
       </div>
       {{!-- Filter --}}
-      <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false"
-        aria-controls="collapseExample">
+      <a class="btn btn-dark" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false"
+        aria-controls="collapseExample"><span>Filter Search
         <i class="fas fa-filter"></i>
+        </span>
       </a>
       <div class="collapse" id="collapseExample">
         <div class="card card-body">
@@ -43,9 +48,16 @@
           </form>
         </div>
       </div>
+       <br>
+      {{!-- Garden Item Search --}}
+      <div class="row" class="card-body">
+        <div class="scroll" id="stats">
+          <h2 id="title">Plants:</h2>
+        </div>
+      </div>
     </div>
-{{!-- Garden column --}}
-    <div class="col-md-6">
+    {{!-- Garden column --}}
+    <div class="col-md-7">
       <div class="album py-5 bg-light" id="gardendiv-bg">
         <div class="container">
           <div class="row">
@@ -112,15 +124,16 @@
           </div>
         </div>
       </div>
-      <br>
-      {{!-- Garden Item Search --}}
-      <div class="row" class="card-body">
-        <div class="scroll" id="stats">
-          <h2 id="title">Plants:</h2>
-        </div>
-      </div>
+     
+
     </div>
   </div>
 </div>
+<footer class="footer">
+  <div class="container">
+    <span class="text" style="color: #2E8B57;">The Green Thumb &#169;</span>
+  </div>
+</footer>
+</body>
 
 <script type="text/javascript" src="js/members.js"></script>

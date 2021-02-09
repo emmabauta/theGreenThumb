@@ -1,8 +1,7 @@
 $(document).ready(function() {
   console.log('member.js loaded')
 
-  
-  
+
   let searchForm = $("form.search")
   let filterForm = $("form.filter")
   let filters = {
@@ -106,7 +105,7 @@ $(document).ready(function() {
       $("#stats").show();
   
       for (var i = 0; i < data.length; i++) {
-        var div = $("<div>").attr("class", "border border-dark");
+        var div = $("<div>").attr("class", "bg-light", "text-dark");
 
 
         div.append("<h2> Common Name: " + data[i].common_name + "</h2>");
