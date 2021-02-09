@@ -54,6 +54,18 @@ module.exports = function(app) {
       res.json(data);
     })
   }
+});
+
+  app.get("/api/id", function(req, res) {
+    if (!req.user) {
+      // The user is not logged in, send back an empty object
+      res.json({});
+    } else {
+      res.json({
+        id: req.user.id
+      });
+    }
+  })
       // Otherwise send back the user's email and id
       // Sending back a password, even a hashed password, isn't a good idea
     //   res.json({
@@ -61,7 +73,7 @@ module.exports = function(app) {
     //     id: req.user.id
     //   });
     // }
-  });
+  
 
   // app.post("/api/mygarden", function(req, res) {
   //   console.log(req.body);
@@ -123,7 +135,7 @@ module.exports = function(app) {
       filters.splice(toDelete[i], 1)
     }
     myQuery = createQuery(filters)
-    // myQuery = myQuery.replace(/\s*$/,"")
+    myQuery = myQuery.replace(/\s*$/,"")
     
     myQuery += ';'
 
@@ -137,9 +149,12 @@ module.exports = function(app) {
     let query = 'SELECT * FROM green_thumb.plants WHERE ';
 
     if (searchedName) {
-      query += `(MATCH (common_name) AGAINST ("${searchedName}")) AND `;
+      query += `(MATCH (common_name) AGAINST ("${searchedName}")) `;
     }
-    if (filters){
+    if (filters.length > 0){
+      if (searchedName) {
+        query += 'AND '
+      }
       for (let index = 0; index < filters.length; index++) {
         myObj = filters[index]
         for (key in myObj) {

@@ -16,11 +16,6 @@ module.exports = function(sequelize, DataTypes) {
     password: {
       type: DataTypes.STRING,
       allowNull: false
-    },
-    my_garden: {
-      type: DataTypes.TEXT,
-      allowNull: false,
-      defaultValue: false,
     }
   });
 

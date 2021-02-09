@@ -105,7 +105,7 @@ $(document).ready(function() {
  
     let addPlant = $(this).data("id")
 
-    $.get("/api/user_data").then(function(data) {
+    $.get("/api/id").then(function(data) {
 
       let newPlant = [
         {user: data.id},
