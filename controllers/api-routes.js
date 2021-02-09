@@ -38,10 +38,9 @@ module.exports = function(app) {
     res.redirect("/");
   });
 
-  // Route for getting some data about our user to be used client side
+
   app.get("/api/user_data", function(req, res) {
     if (!req.user) {
-      // The user is not logged in, send back an empty object
       res.json({});
     } else {
 
@@ -51,14 +50,37 @@ module.exports = function(app) {
       }
 
     }).then((data) => {
-      res.json(data);
+      let query = `SELECT * FROM green_thumb.plants WHERE `;
+      for (i in data) {
+        let newPlants = data[i].dataValues.PlantId;
+        if (data[i] == data[data.length -1]) {
+              query += `id = ${newPlants};`
+              db.sequelize.query(query, { type: QueryTypes.SELECT }).then((results) => {
+                res.json(results)
+              })
+            }
+            query += `id = ${newPlants} OR `
+      }
+      
+      
+
+      // for (i in data) {
+      //   if (data[i] == data[data.length -1]) {
+      //     query += `(id = "${data[i]}");`
+      //     db.sequelize.query(query, { type: QueryTypes.SELECT }).then((results) => {
+      //       res.json(results)
+      //     })
+      //   }
+      //   query += `(id = "${data[i]}") AND `
+      // }
+      
     })
   }
 });
 
   app.get("/api/id", function(req, res) {
     if (!req.user) {
-      // The user is not logged in, send back an empty object
+
       res.json({});
     } else {
       res.json({
@@ -66,26 +88,27 @@ module.exports = function(app) {
       });
     }
   })
-      // Otherwise send back the user's email and id
-      // Sending back a password, even a hashed password, isn't a good idea
-    //   res.json({
-    //     email: req.user.email,
-    //     id: req.user.id
-    //   });
-    // }
-  
 
-  // app.post("/api/mygarden", function(req, res) {
-  //   console.log(req.body);
-    
-  // })
-
+  app.post("/api/getplants", function(req,res) {
+    let query = 'SELECT * FROM green_thumb.plants WHERE ';
+    plants = req.body
+    plants = parseInt(plants)
+    for (i in plants) {
+      if (plants[i] == plants[plants.length -1]) {
+        query += `(id = "${plants[i]}");`
+        db.sequelize.query(query, { type: QueryTypes.SELECT }).then((data) => {
+          res.json(data)
+        })
+      }
+      query += `(id = "${plants[i]}") AND `
+    }
+  })
 
   app.post("/api/newPlant", function(req, res) {
     addPlant = req.body
     let user;
     let plant;
-    console.log(addPlant);
+
     for (i in addPlant) {
       for (index in addPlant[i]) {
         if (addPlant[i] == addPlant[0]) {
@@ -96,8 +119,7 @@ module.exports = function(app) {
         }
       }
     }
-    console.log(typeof plant);
-
+ 
     realPlant =parseInt(plant)
 
 
