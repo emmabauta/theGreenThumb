@@ -1,9 +1,8 @@
 $(document).ready(function() {
   console.log('member.js loaded')
 
-
-  let searchForm = $("form.search")
-  let filterForm = $("form.filter")
+  let searchForm = $("form.search");
+  let filterForm = $("form.filter");
   let filters = {
     growth_habit: ["Tree", "Forb/herb", "Vine", "Subshrub", "Graminoid", "Shrub"],
     active_growth_period: ["Spring", "Summer", "Year Round", "Fall", "Winter"],
@@ -41,7 +40,7 @@ $(document).ready(function() {
   filterForm.on("submit", function(e) {
     e.preventDefault()
     let filtering = []
-    let categories =[
+    let categories = [
       {growth_habit: []},
       {active_growth_period: []},
       {flower_color: []},
@@ -86,6 +85,7 @@ $(document).ready(function() {
   $.get("/api/search/" + searchValue, function(data) {
     console.log(data);
     renderPlants(data)
+    // renderGarden(data)
   
   })
   })
@@ -120,6 +120,7 @@ $(document).ready(function() {
         div.append("<p> Shade Tolerance: " + data[i].shade_tolerance + "</p>");
         div.append("<p> Bloom Period: " + data[i].bloom_period + "</p>");
         div.append("<button>" + "Add")
+        $("button").attr("id","addBtn");
         // <i class="fas fa-plus-square"></i>
 
         $("#stats").append(div).append("<br>");
@@ -127,7 +128,42 @@ $(document).ready(function() {
     }
   }
 
+// In Process Need Fix Garden appending
+
+  // $(document).on("click", "#addBtn" , function(e) {
+  //   e.preventDefault()
+  //   console.log("THY BUTTON IS WORKING SIR!");
+  // $.get("/api/search/", function(data) {
+  //   console.log(data);
+  //   renderGarden(data);
   
+  // })
+  // })
+
+  //GARDEN JQUERY
+  // function renderGarden(data) {
+  //   if (data.length !== 0) {
+  
+  //     $("#stats").empty();
+  //     $("#stats").show();
+  
+  //     for (var i = 0; i < data.length; i++) {
+  //       var div = $("<div>").attr("class", "col-md-4");
+
+  //       div.append("<div>").attr("class","card mb-4 box-shadow");
+  //       div.append("<img>").attr("class", "card-img-top");
+  //       div.append("<div>").attr("class","card-body");
+  //       div.append("<p> User Selection").attr("class", "card-text");
+  //       div.append("<div>").attr("class", "d-flex justify-content-between align-items-center");
+  //       div.append("<button>" + "Delete")
+  //       $("button").attr("id","deleteBtn");
+
+  //       $("#stats").append(div).append("<br>");
+  //     }
+  //   }
+  // }
+
+
   renderFilters()
 
 
