@@ -1,10 +1,12 @@
 $(document).ready(function() {
   console.log('member.js loaded')
 
+
   let id;
   let garden = $("#myGarden")
   let searchForm = $("form.search")
   let filterForm = $("form.filter")
+
   let filters = {
     growth_habit: ["Tree", "Forb/herb", "Vine", "Subshrub", "Graminoid", "Shrub"],
     active_growth_period: ["Spring", "Summer", "Year Round", "Fall", "Winter"],
@@ -25,9 +27,6 @@ $(document).ready(function() {
     
   });
 
-
-
-  
 
   function renderFilters() {
     for (i in filters) {
@@ -52,7 +51,7 @@ $(document).ready(function() {
   $(document).on("click", "#lookup", function(e) {
     e.preventDefault()
     let filtering = []
-    let categories =[
+    let categories = [
       {growth_habit: []},
       {active_growth_period: []},
       {flower_color: []},
@@ -96,13 +95,7 @@ $(document).ready(function() {
     })
   })
 
-  // searchForm.on("submit", function(e) {
-  //   e.preventDefault()
-  //   let searchValue =  $("input#name-search").val().trim()
-  // $.get("/api/search/" + searchValue, function(data) {
-  //   console.log(data);
-  //   renderPlants(data)
-  
+
   // })
   // });
 
@@ -154,13 +147,24 @@ $(document).ready(function() {
   
       for (var i = 0; i < data.length; i++) {
 
-        var div = $("<div>");
-  
-        div.append("<h2>" + data[i].scientific_name + "</h2>");   
-        div.append("<p>" + data[i].common_name + "</p>");   
-        div.append(`<img src="${data[i].image_url}" width="300" height="350">`);
+        var div = $("<div>").attr("class", "bg-light", "text-dark");
+
+
+        div.append("<h2> Common Name: " + data[i].common_name + "</h2>");
+        div.append("<p> Scientific Name: " + data[i].scientific_name + "</p>");
+        div.append(`<img src="${data[i].image_url}" width="250" height="300">`);
+        // div.append("<p>" + data[i].State_and_Province + "</p>");
+        div.append("<p> Growth Habit " + data[i].growth_habit + "</p>");
+        // div.append("<p>" + data[i].Plant_Guides + "</p>");
+        div.append("<p> Active Growth Period " + data[i].active_growth_period + "</p>");
+        div.append("<p> Flower Color: " + data[i].flower_color + "</p>");
+        div.append("<p> Foliage Color: " + data[i].foliage_color + "</p>");
+        div.append("<p> Shade Tolerance: " + data[i].shade_tolerance + "</p>");
+        div.append("<p> Bloom Period: " + data[i].bloom_period + "</p>");
         div.append(`<button type="button" data-id="${data[i].id}" id="myGarden" class="btn btn-default myGarden">Add to My Garden</button>`)
-        $("#stats").append(div);
+        // <i class="fas fa-plus-square"></i>
+
+        $("#stats").append(div).append("<br>");
       }
     }
   }
