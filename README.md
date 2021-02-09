@@ -45,9 +45,9 @@ npm test
 ```
 
 ## Screenshots
-![screenshot1](./public/images/signupScreen.png)
+![image](https://user-images.githubusercontent.com/73251656/107418938-3e49a180-6ae5-11eb-87e4-a7b63cfa9f4f.png)
 
-![screenshot2](./public/images/loginScreen.png)
+![image](https://user-images.githubusercontent.com/73251656/107418495-ba8fb500-6ae4-11eb-973e-8c79b5e777b5.png)
 
 
 ### Deployed App Heroku Link
