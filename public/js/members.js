@@ -20,8 +20,7 @@ $(document).ready(function() {
 
 
   $.get("/api/user_data").then(function(data) {
-    console.log(data);
-  
+    renderGarden(data);  
  
   });
 
@@ -163,6 +162,44 @@ $(document).ready(function() {
         // <i class="fas fa-plus-square"></i>
 
         $("#stats").append(div).append("<br>");
+      }
+    }
+  }
+
+  
+
+  
+// In Process Need Fix Garden appending
+
+  $(document).on("click", "#addBtn" , function(e) {
+    e.preventDefault()
+    console.log("THY BUTTON IS WORKING SIR!");
+  $.get("/api/search/", function(data) {
+    console.log(data);
+    renderGarden(data);
+  
+  })
+  })
+
+  //GARDEN JQUERY
+  function renderGarden(data) {
+    console.log(data);
+    if (data.length !== 0) {
+  
+      $(".addItem").empty();
+      $(".addItem").show();
+  
+      for (var i = 0; i < data.length; i++) {
+        var div = $("<div>").attr("class", "col-md-4");
+
+        div.append("<div>").attr("class","card mb-4 box-shadow");
+        div.append("<img>").attr("class", "card-img-top");
+        div.append("<div>").attr("class","card-body");
+        div.append("<p> User Selection").attr("class", "card-text");
+        div.append("<div>").attr("class", "d-flex justify-content-between align-items-center");
+        div.append(`<button type="button" data-id="${data[i].id}" id="myGarden" class="btn btn-primary myGarden">Delete</button>`);
+
+        $(".addItem").append(div).append("<br>");
       }
     }
   }
