@@ -57,5 +57,9 @@ module.exports = function(sequelize, DataTypes) {
 
   }
   );
+
+  Plant.associate = function(models) {
+    models.Plant.belongsToMany(models.User, { through: models.UserPlant, onDelete: "cascade" });
+  }
   return Plant;
 };

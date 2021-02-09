@@ -1,8 +1,12 @@
 $(document).ready(function() {
   console.log('member.js loaded')
 
-  let searchForm = $("form.search");
-  let filterForm = $("form.filter");
+
+  let id;
+  let garden = $("#myGarden")
+  let searchForm = $("form.search")
+  let filterForm = $("form.filter")
+
   let filters = {
     growth_habit: ["Tree", "Forb/herb", "Vine", "Subshrub", "Graminoid", "Shrub"],
     active_growth_period: ["Spring", "Summer", "Year Round", "Fall", "Winter"],
@@ -13,9 +17,16 @@ $(document).ready(function() {
   }
   // This file just does a GET request to figure out which user is logged in
   // and updates the HTML on the page
+
+
   $.get("/api/user_data").then(function(data) {
-    $(".member-name").text(data.email);
+      for (i in data) {
+        
+      }
+    
+    
   });
+
 
   function renderFilters() {
     for (i in filters) {
@@ -37,7 +48,7 @@ $(document).ready(function() {
     }
   }
 
-  filterForm.on("submit", function(e) {
+  $(document).on("click", "#lookup", function(e) {
     e.preventDefault()
     let filtering = []
     let categories = [
@@ -67,6 +78,10 @@ $(document).ready(function() {
         }
       }
     }
+    let searchValue =  $("input#name-search").val().trim()
+    if (searchValue) {
+      categories.push(searchValue)
+    }
     $.ajax({
       url: "/api/filter",
       type: "POST",
@@ -74,21 +89,45 @@ $(document).ready(function() {
       data: JSON.stringify(categories),
       success: function(result) {
         console.log("Post complete")
+        renderPlants(result)
 
       }
     })
   })
 
-  searchForm.on("submit", function(e) {
-    e.preventDefault()
-    let searchValue =  $("input#name-search").val().trim()
-  $.get("/api/search/" + searchValue, function(data) {
-    console.log(data);
-    renderPlants(data)
-    // renderGarden(data)
+
+  // })
+  // });
+
+
+  $(document).on("click","#myGarden",function(e) {
+    e.preventDefault();
+ 
+    let addPlant = $(this).data("id")
+
+    $.get("/api/user_data").then(function(data) {
+
+      let newPlant = [
+        {user: data.id},
+        {toAdd: addPlant}
+      ]
+      $.ajax({
+        url: "/api/newPlant",
+        type: "POST",
+        contentType: "application/json",
+        data: JSON.stringify(newPlant),
+        success: function(result) {
+          console.log("Post complete")
   
-  })
-  })
+        }
+      })
+    });
+
+});
+
+
+  
+
 
   function humanize(str) {
     var i, frags = str.split('_');
@@ -100,11 +139,14 @@ $(document).ready(function() {
 
   function renderPlants(data) {
     if (data.length !== 0) {
+
+      
   
       $("#stats").empty();
       $("#stats").show();
   
       for (var i = 0; i < data.length; i++) {
+
         var div = $("<div>").attr("class", "bg-light", "text-dark");
 
 
@@ -119,50 +161,13 @@ $(document).ready(function() {
         div.append("<p> Foliage Color: " + data[i].foliage_color + "</p>");
         div.append("<p> Shade Tolerance: " + data[i].shade_tolerance + "</p>");
         div.append("<p> Bloom Period: " + data[i].bloom_period + "</p>");
-        div.append("<button>" + "Add")
-        $("button").attr("id","addBtn");
+        div.append(`<button type="button" data-id="${data[i].id}" id="myGarden" class="btn btn-default myGarden">Add to My Garden</button>`)
         // <i class="fas fa-plus-square"></i>
 
         $("#stats").append(div).append("<br>");
       }
     }
   }
-
-// In Process Need Fix Garden appending
-
-  // $(document).on("click", "#addBtn" , function(e) {
-  //   e.preventDefault()
-  //   console.log("THY BUTTON IS WORKING SIR!");
-  // $.get("/api/search/", function(data) {
-  //   console.log(data);
-  //   renderGarden(data);
-  
-  // })
-  // })
-
-  //GARDEN JQUERY
-  // function renderGarden(data) {
-  //   if (data.length !== 0) {
-  
-  //     $("#stats").empty();
-  //     $("#stats").show();
-  
-  //     for (var i = 0; i < data.length; i++) {
-  //       var div = $("<div>").attr("class", "col-md-4");
-
-  //       div.append("<div>").attr("class","card mb-4 box-shadow");
-  //       div.append("<img>").attr("class", "card-img-top");
-  //       div.append("<div>").attr("class","card-body");
-  //       div.append("<p> User Selection").attr("class", "card-text");
-  //       div.append("<div>").attr("class", "d-flex justify-content-between align-items-center");
-  //       div.append("<button>" + "Delete")
-  //       $("button").attr("id","deleteBtn");
-
-  //       $("#stats").append(div).append("<br>");
-  //     }
-  //   }
-  // }
-
 
   renderFilters()
 

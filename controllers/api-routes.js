@@ -3,6 +3,7 @@ let db = require("../models");
 let passport = require("../config/passport");
 const { Sequelize } = require('sequelize');
 const { QueryTypes } = require('sequelize');
+const userPlant = require("../models/userPlant");
 
 
 module.exports = function(app) {
@@ -43,47 +44,72 @@ module.exports = function(app) {
       // The user is not logged in, send back an empty object
       res.json({});
     } else {
+
+      db.UserPlant.findAll({
+      where: {
+        UserId: req.user.id
+      }
+
+    }).then((data) => {
+      res.json(data);
+    })
+  }
       // Otherwise send back the user's email and id
       // Sending back a password, even a hashed password, isn't a good idea
-      res.json({
-        email: req.user.email,
-        id: req.user.id
-      });
-    }
+    //   res.json({
+    //     email: req.user.email,
+    //     id: req.user.id
+    //   });
+    // }
   });
 
-  // The :search is what the user types in
-  app.get("/api/search/:search", function(req, res) {
+  // app.post("/api/mygarden", function(req, res) {
+  //   console.log(req.body);
+    
+  // })
 
-    searchedName = req.params.search
-    db.Plant.findAll({
-      // This is going to match roughly against the database. Allows user to make typing errors
-      where: Sequelize.literal(`MATCH (common_name) AGAINST (:name)`),
-      replacements: {
-        name: req.params.search
+
+  app.post("/api/newPlant", function(req, res) {
+    addPlant = req.body
+    let user;
+    let plant;
+    console.log(addPlant);
+    for (i in addPlant) {
+      for (index in addPlant[i]) {
+        if (addPlant[i] == addPlant[0]) {
+          user = addPlant[i][index]
+        }
+        else {
+          plant = addPlant[i][index]
+        }
       }
-    }).then(function(mySearch) {
-      // Logs out the response here
-      // console.log(mySearch)
-      res.json(mySearch);
-    });
+    }
+    console.log(typeof plant);
+
+    realPlant =parseInt(plant)
+
+
+    db.User.findOne({
+      where: {
+        id: user
+      }
+    }).then((data) => {
+      data.addPlant(realPlant)
+    })
   })
+
 
   app.post("/api/filter", function(req, res) {
 
-  
-    console.log(searchedName);
-    
     filters = req.body
 
+    searchedName = filters[filters.length -1]
+    filters.splice(filters.length -1, 1)
     toDelete = []
     
     
     for (i in filters) {
-      console.log(i)
       for (index in filters[i]) {
-        console.log(filters[i])
-
         if (filters[i][index].length < 1) {
           toDelete.push(i)
         }
@@ -96,19 +122,14 @@ module.exports = function(app) {
 
       filters.splice(toDelete[i], 1)
     }
-    console.log(filters)
-    
     myQuery = createQuery(filters)
-    myQuery = myQuery.replace(/\s*$/,"")
+    // myQuery = myQuery.replace(/\s*$/,"")
     
     myQuery += ';'
-    console.log(myQuery);
-    
-    db.sequelize.query(myQuery, { type: QueryTypes.SELECT }).then((data) => {
-      console.log(data);
-    })
 
-    
+    db.sequelize.query(myQuery, { type: QueryTypes.SELECT }).then((data) => {
+      res.json(data)
+    })
   })
 
 
@@ -118,36 +139,40 @@ module.exports = function(app) {
     if (searchedName) {
       query += `(MATCH (common_name) AGAINST ("${searchedName}")) AND `;
     }
+    if (filters){
+      for (let index = 0; index < filters.length; index++) {
+        myObj = filters[index]
+        for (key in myObj) {
 
-    for (let index = 0; index < filters.length; index++) {
-      myObj = filters[index]
-      for (key in myObj) {
+          valueArray = myObj[key]
 
-        valueArray = myObj[key]
-
-        for (value in valueArray) {
-          if (valueArray[value] == valueArray[0]) {
-            query += '('
-          }
-          if ((valueArray[value] == valueArray[valueArray.length - 1]) && (myObj == filters[filters.length - 1])) {
-            query += `${key} = "${valueArray[value]}")`;
-            return query;
-          }
-          else {
-            
-            if (valueArray[value] == valueArray[valueArray.length - 1]) {
-              query += `${key} = "${valueArray[value]}") `;
-              query += 'AND ';
+          for (value in valueArray) {
+            if (valueArray[value] == valueArray[0]) {
+              query += '('
+            }
+            if ((valueArray[value] == valueArray[valueArray.length - 1]) && (myObj == filters[filters.length - 1])) {
+              query += `${key} = "${valueArray[value]}")`;
+              return query;
             }
             else {
-              query += `${key} = "${valueArray[value]}" `;
-              query += 'OR ';
+              
+              if (valueArray[value] == valueArray[valueArray.length - 1]) {
+                query += `${key} = "${valueArray[value]}") `;
+                query += 'AND ';
+              }
+              else {
+                query += `${key} = "${valueArray[value]}" `;
+                query += 'OR ';
+              }
+              
             }
-            
-          }
 
+          }
         }
       }
+    }
+    else {
+      return query;
     }
 
   }
