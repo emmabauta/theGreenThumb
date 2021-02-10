@@ -249,7 +249,7 @@ $(document).ready(function () {
       $('.modal-body').append(`<p> Shade Tolerance: ${data.shade_tolerance}</p>`);
       $('.modal-body').append(`<p> Bloom Period: ${data.bloom_period}</p>`);
       if (data.plant_guides) {
-        $(".modal-footer").append(`<button id="getInfo" type="button" class="btn btn-primary">More info</button>`)
+        $(".modal-footer").append(`<button id="getInfo" type="button" class="btn btn-secondary">More info</button>`)
       }
       // let modal = $(`<div class="modal fade" id="${target}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"></div>`);
       // $('.fade').append(`<div id="mini" class="modal-dialog modal-dialog-centered"></div>`);
