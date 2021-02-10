@@ -13,8 +13,14 @@ $(document).ready(function () {
   // and updates the HTML on the page
 
 
-  $.get("/api/user_data").then(function (data) {
-    renderGarden(data);
+  function getPlants() {
+  $.get("/api/user_data").then(function(data) {
+    renderGarden(data);  
+ 
+  });
+}
+  getPlants()
+
 
   });
 
@@ -106,11 +112,38 @@ $(document).ready(function () {
         success: function (result) {
           console.log("Post complete")
 
+          getPlants()
+          
+
         }
       })
     });
 
-  });
+
+});
+
+
+$(document).on("click","#delete",function(e) {
+  e.preventDefault();
+
+  let deletePlant = $(this).data("id")
+
+  $.ajax({
+    method: "DELETE",
+    url: "/api/plants/" + deletePlant
+  }).then(function(data) {
+    console.log("Deleted");
+    getPlants()
+
+
+  })
+
+    
+
+});
+
+
+
 
 
   function humanize(str) {
@@ -150,21 +183,28 @@ $(document).ready(function () {
 
         $("#stats").append(div).append("<br>");
       }
+      
     }
   }
 
   // In Process Need Fix Garden appending
 
-  $(document).on("click", "#addBtn", function (e) {
-    e.preventDefault()
-    console.log("THY BUTTON IS WORKING SIR!");
-    $.get("/api/search/", function (data) {
-      console.log(data);
-      renderGarden(data);
+  
+// In Process Need Fix Garden appending
+
+  // $(document).on("click", "#addBtn" , function(e) {
+  //   e.preventDefault()
+  //   console.log("THY BUTTON IS WORKING SIR!");
+  // $.get("/api/search/", function(data) {
+  //   console.log(data);
+  //   renderGarden(data);
+  
+  // })
+  // })
+
 
     })
   });
-
 
 //GARDEN JQUERY
 function renderGarden(data) {
