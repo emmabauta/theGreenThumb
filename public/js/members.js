@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).ready(function () {
   console.log('member.js loaded')
 
   let filters = {
@@ -12,6 +12,7 @@ $(document).ready(function() {
   // This file just does a GET request to figure out which user is logged in
   // and updates the HTML on the page
 
+
   function getPlants() {
   $.get("/api/user_data").then(function(data) {
     renderGarden(data);  
@@ -20,6 +21,8 @@ $(document).ready(function() {
 }
   getPlants()
 
+
+  });
 
   function renderFilters() {
     for (i in filters) {
@@ -31,47 +34,48 @@ $(document).ready(function() {
       grid.append(title)
       for (index in column) {
         parameters = column[index]
-        
+
         let newCheckbox = `<div class="checkbox"><label><input type="checkbox" name="type" value="${i}:${parameters}">${parameters}</label></div>`;
 
         grid.append(newCheckbox)
-        
+
       }
       $("#filter").append(grid)
     }
   }
 
-  $(document).on("click", "#lookup", function(e) {
+  $(document).on("click", "#lookup", function (e) {
     e.preventDefault()
     let filtering = []
     let categories = [
-      {growth_habit: []},
-      {active_growth_period: []},
-      {flower_color: []},
-      {foliage_color: []},
-      {shade_tolerance: []},
-      {bloom_period: []}
+      { growth_habit: [] },
+      { active_growth_period: [] },
+      { flower_color: [] },
+      { foliage_color: [] },
+      { shade_tolerance: [] },
+      { bloom_period: [] }
     ]
-    
-    $("input:checkbox[name=type]:checked").each(function(){
+
+    $("input:checkbox[name=type]:checked").each(function () {
       filtering.push($(this).val());
+
     });
 
     for (i in filtering) {
-      
+
       seperate = filtering[i]
       seperate = seperate.split(':')
       filterColumn = seperate[0]
       filterValue = seperate[1]
 
       for (index in categories) {
-        
+
         if (filterColumn in categories[index]) {
           categories[index][filterColumn].push(filterValue)
         }
       }
     }
-    let searchValue =  $("input#name-search").val().trim()
+    let searchValue = $("input#name-search").val().trim()
     if (searchValue) {
       categories.push(searchValue)
     }
@@ -80,7 +84,7 @@ $(document).ready(function() {
       type: "POST",
       contentType: "application/json",
       data: JSON.stringify(categories),
-      success: function(result) {
+      success: function (result) {
         console.log("Post complete")
         renderPlants(result)
 
@@ -89,34 +93,32 @@ $(document).ready(function() {
   })
 
 
-  // })
-  // });
-
-
-  $(document).on("click","#myGarden",function(e) {
+  $(document).on("click", "#myGarden", function (e) {
     e.preventDefault();
- 
+
     let addPlant = $(this).data("id")
 
-    $.get("/api/id").then(function(data) {
+    $.get("/api/id").then(function (data) {
 
       let newPlant = [
-        {user: data.id},
-        {toAdd: addPlant}
+        { user: data.id },
+        { toAdd: addPlant }
       ]
       $.ajax({
         url: "/api/newPlant",
         type: "POST",
         contentType: "application/json",
         data: JSON.stringify(newPlant),
-        success: function(result) {
+        success: function (result) {
           console.log("Post complete")
+
           getPlants()
           
-  
+
         }
       })
     });
+
 
 });
 
@@ -141,12 +143,12 @@ $(document).on("click","#delete",function(e) {
 });
 
 
-  
+
 
 
   function humanize(str) {
     var i, frags = str.split('_');
-    for (i=0; i<frags.length; i++) {
+    for (i = 0; i < frags.length; i++) {
       frags[i] = frags[i].charAt(0).toUpperCase() + frags[i].slice(1);
     }
     return frags.join(' ');
@@ -155,11 +157,11 @@ $(document).on("click","#delete",function(e) {
   function renderPlants(data) {
     if (data.length !== 0) {
 
-      
-  
+
+
       $("#stats").empty();
       $("#stats").show();
-  
+
       for (var i = 0; i < data.length; i++) {
 
         var div = $("<div>").attr("class", "bg-light", "text-dark");
@@ -185,7 +187,7 @@ $(document).on("click","#delete",function(e) {
     }
   }
 
-  
+  // In Process Need Fix Garden appending
 
   
 // In Process Need Fix Garden appending
@@ -200,32 +202,33 @@ $(document).on("click","#delete",function(e) {
   // })
   // })
 
-  //GARDEN JQUERY
-  function renderGarden(data) {
-    console.log(data);
-    if (data.length !== 0) {
-  
-      $(".addItem").empty();
-      $(".addItem").show();
-  
-      for (var i = 0; i < data.length; i++) {
-        var div = $("<div>").attr("class", "col-md-4");
 
-        div.append("<div>").attr("class","card mb-4 box-shadow");
-        div.append("<img>").attr("class", "card-img-top");
-        div.append("<div>").attr("class","card-body");
-        div.append("<p> User Selection").attr("class", "card-text");
-        div.append("<div>").attr("class", "d-flex justify-content-between align-items-center");
-        div.append(`<button type="button" data-id="${data[i].id}" id="delete" class="btn btn-primary myGarden">Delete</button>`);
+    })
+  });
 
-        $(".addItem").append(div).append("<br>");
-      }
+//GARDEN JQUERY
+function renderGarden(data) {
+  console.log(data);
+  if (data.length !== 0) {
+    $(".addItem").empty();
+    $(".addItem").show();
+    for (var i = 0; i < data.length; i++) {
+
+      var div = $("<div>").attr("class", "col-md-4 border border-dark");
       
+      div.append(`<img src="${data[i].image_url}" width="200" height="200">`);
+      div.append(`<button type="button" data-id="${data[i].id}" id="myGarden" class="btn btn-dark myGarden">Delete</button>`);
+      // div.append("<div>").attr("class","card mb-4 box-shadow");
+      // div.append("<img>").attr("class", "card-img-top");
+      // div.append("<div>").attr("class","card-body");
+      // div.append("<p> User Selection").attr("class", "card-text");
+      // div.append("<div>").attr("class", "d-flex justify-content-between align-items-center");
+      // div.append(`<button type="button" data-id="${data[i].id}" id="myGarden" class="btn btn-primary myGarden">Delete</button>`);
+      $(".addItem").append(div).append("<br>");
     }
   }
+}
 
   renderFilters()
-
-
 
 });
