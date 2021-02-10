@@ -161,16 +161,16 @@ $(document).ready(function () {
         var div = $("<div>").attr("class", "bg-light", "text-dark");
 
 
-        div.append("<h2> Common Name: " + data[i].common_name + "</h2>");
+        div.append("<h2> Common Name: " + data[i].Common_name + "</h2>");
         div.append("<p> Scientific Name: " + data[i].scientific_name + "</p>");
         div.append(`<img src="${data[i].image_url}" width="250" height="300">`);
-        div.append("<p> Growth Habit " + data[i].growth_habit + "</p>");
-        div.append("<p> Active Growth Period " + data[i].active_growth_period + "</p>");
-        div.append("<p> Flower Color: " + data[i].flower_color + "</p>");
-        div.append("<p> Foliage Color: " + data[i].foliage_color + "</p>");
-        div.append("<p> Shade Tolerance: " + data[i].shade_tolerance + "</p>");
-        div.append("<p> Bloom Period: " + data[i].bloom_period + "</p>");
-        div.append(`<button type="button" data-id="${data[i].id}" id="myGarden" class="btn btn-default myGarden">Add to My Garden</button>`)
+        div.append("<p> Growth Habit " + data[i].Growth_Habit + "</p>");
+        div.append("<p> Active Growth Period " + data[i].Active_Growth_Period + "</p>");
+        div.append("<p> Flower Color: " + data[i].Flower_Color + "</p>");
+        div.append("<p> Foliage Color: " + data[i].Foliage_Color + "</p>");
+        div.append("<p> Shade Tolerance: " + data[i].Shade_Tolerance + "</p>");
+        div.append("<p> Bloom Period: " + data[i].Bloom_Period + "</p>");
+        div.append(`<button type="button" data-id="${data[i].id}" id="myGarden" class="btn btn-dark myGarden" >Add to My Garden</button>`)
         // <i class="fas fa-plus-square"></i>
 
         $("#stats").append(div).append("<br>");
@@ -227,15 +227,15 @@ $(document).ready(function () {
       $(".modal-title").empty()
       $('.modal-body').empty()
 
-      $(".modal-title").text(data.common_name)
+      $(".modal-title").text(data.Common_name)
    
       $('.modal-body').append(`<img src="${data.image_url}"  width=150 class="center"/>`);
-      $('.modal-body').append(`<p> Growth Habit: ${data.growth_habit}</p>`);
-      $('.modal-body').append(`<p> Active Growth Period: ${data.active_growth_period}</p>`);
-      $('.modal-body').append(`<p> Flower Color: ${data.flower_color}</p>`);
-      $('.modal-body').append(`<p> Foliage Color: ${data.foliage_color}</p>`);
-      $('.modal-body').append(`<p> Shade Tolerance: ${data.shade_tolerance}</p>`);
-      $('.modal-body').append(`<p> Bloom Period: ${data.bloom_period}</p>`);
+      $('.modal-body').append(`<p> Growth Habit: ${data.Growth_habit}</p>`);
+      $('.modal-body').append(`<p> Active Growth Period: ${data.Active_Growth_Period}</p>`);
+      $('.modal-body').append(`<p> Flower Color: ${data.Flower_Color}</p>`);
+      $('.modal-body').append(`<p> Foliage Color: ${data.Foliage_Color}</p>`);
+      $('.modal-body').append(`<p> Shade Tolerance: ${data.Shade_Tolerance}</p>`);
+      $('.modal-body').append(`<p> Bloom Period: ${data.Bloom_Period}</p>`);
 
       // let modal = $(`<div class="modal fade" id="${target}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"></div>`);
       // $('.fade').append(`<div id="mini" class="modal-dialog modal-dialog-centered"></div>`);
