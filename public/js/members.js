@@ -189,7 +189,9 @@ $(document).ready(function () {
         var div = $("<div>").attr("class", "col-md-4 border border-dark");
 
         div.append(`<img src="${data[i].image_url}" width="200" height="200">`);
-        div.append(`<button type="button" data-id="${data[i].id}" id="delete" class="btn btn-dark myGarden">Delete</button>`);
+        // <!-- Button trigger modal -->
+        div.append(`<button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">Plant Info </button>`);
+        div.append(`<button type="button" data-id="${data[i].id}" id="delete" class="btn btn-dark myGarden" style="float: right;">Delete</button>`);
 
         $(".addItem").append(div).append("<br>");
       }
