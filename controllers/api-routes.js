@@ -6,6 +6,7 @@ const { QueryTypes } = require('sequelize');
 const userPlant = require("../models/userPlant");
 
 
+
 module.exports = function(app) {
   // Using the passport.authenticate middleware with our local strategy.
   // If the user has valid login credentials, send them to the members page.
@@ -56,7 +57,7 @@ module.exports = function(app) {
         if (data[i] == data[data.length -1]) {
               query += `id = ${newPlants};`
               db.sequelize.query(query, { type: QueryTypes.SELECT }).then((results) => {
-                console.log(results);
+                // console.log(results);
                 res.json(results)
               })
             }
@@ -169,8 +170,48 @@ module.exports = function(app) {
     plants = req.params.id
     let query = `SELECT * FROM green_thumb.plants WHERE (id = "${plants}");`;
     db.sequelize.query(query, { type: QueryTypes.SELECT }).then((data) => {
-      console.log(data + "HEYOOOOOO");
-      res.json(data)
+
+
+      // res.json(data)
+      console.log(JSON.stringify(data[0]) + data[0].scientific_name);
+
+      // result = JSON.stringify(data[0])
+
+      res.json(data[0])
+ 
+      // for (i in data) {
+      //   console.log("hello world");
+        
+      //   let moreinfo = bootbox.dialog({
+      //     title: data[i].common_name,
+      //     message: `<img src="${data[i].image_url}"  width=150 class="center"/><p> Growth Habit: ${data[i].growth_habit}</p><p> Active Growth Period: ${data[i].active_growth_period}</p><p> Flower Color: ${data[i].flower_color}</p><p> Foliage Color: ${data[i].foliage_color}</p><p> Shade Tolerance: ${data[i].shade_tolerance}</p><p> Bloom Period: ${data[i].bloom_period}</p>`,
+      //     size: 'large',
+      //     buttons: {
+      //         cancel: {
+      //             label: "I'm a cancel button!",
+      //             className: 'btn-danger',
+      //             callback: function(){
+      //                 console.log('Custom cancel clicked');
+      //             }
+      //         },
+      //         noclose: {
+      //             label: "I don't close the modal!",
+      //             className: 'btn-warning',
+      //             callback: function(){
+      //                 console.log('Custom button clicked');
+      //                 return false;
+      //             }
+      //         },
+      //         ok: {
+      //             label: "I'm an OK button!",
+      //             className: 'btn-info',
+      //             callback: function(){
+      //                 console.log('Custom OK clicked');
+      //             }
+      //         }
+      //     }
+      // });
+  
     })
   });
 
