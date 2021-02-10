@@ -171,7 +171,7 @@ $(document).ready(function () {
         div.append("<p> Foliage Color: " + data[i].foliage_color + "</p>");
         div.append("<p> Shade Tolerance: " + data[i].shade_tolerance + "</p>");
         div.append("<p> Bloom Period: " + data[i].bloom_period + "</p>");
-        div.append(`<button type="button" data-id="${data[i].id}" id="myGarden" class="btn btn-default myGarden">Add to My Garden</button>`)
+        div.append(`<button type="button" data-id="${data[i].id}" id="myGarden" class="btn btn-dark myGarden" >Add to My Garden</button>`)
         // <i class="fas fa-plus-square"></i>
 
         $("#stats").append(div).append("<br>");
