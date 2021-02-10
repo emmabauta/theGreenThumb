@@ -2,6 +2,7 @@
 $(document).ready(function () {
   console.log('member.js loaded')
 
+  
   let filters = {
     growth_habit: ["Tree", "Forb/herb", "Vine", "Subshrub", "Graminoid", "Shrub"],
     active_growth_period: ["Spring", "Summer", "Year Round", "Fall", "Winter"],
@@ -213,19 +214,30 @@ $(document).ready(function () {
     }
   }
 
-
+  let moreInfo;
+  $(document).on("click", "#getInfo", function(e) {
+    e.preventDefault();
+    console.log(moreInfo + "herherehrererere");
+    window.open(moreInfo)
+  })
 
   function renderModal(data){
 
     
     let div = $("body")
   
-      console.log(data);
+      // console.log(data);
       let target = `exampleModal${data.id}`
 
-      console.log();
+      plantGuid = data.plant_guides 
+
+      plantGuid = plantGuid.substring(2)
+
+      moreInfo = "https://plants.sc.egov.usda.gov" + plantGuid;
+      // console.log(plantGuid);
       $(".modal-title").empty()
       $('.modal-body').empty()
+      $(".modal-footer").empty()
 
       $(".modal-title").text(data.common_name)
    
@@ -236,7 +248,9 @@ $(document).ready(function () {
       $('.modal-body').append(`<p> Foliage Color: ${data.foliage_color}</p>`);
       $('.modal-body').append(`<p> Shade Tolerance: ${data.shade_tolerance}</p>`);
       $('.modal-body').append(`<p> Bloom Period: ${data.bloom_period}</p>`);
-
+      if (data.plant_guides) {
+        $(".modal-footer").append(`<button id="getInfo" type="button" class="btn btn-primary">More info</button>`)
+      }
       // let modal = $(`<div class="modal fade" id="${target}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"></div>`);
       // $('.fade').append(`<div id="mini" class="modal-dialog modal-dialog-centered"></div>`);
       // $('.fade').append(`<div class="modal-content"></div>`);
