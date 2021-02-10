@@ -12,17 +12,13 @@ $(document).ready(function () {
   // This file just does a GET request to figure out which user is logged in
   // and updates the HTML on the page
 
-
   function getPlants() {
-  $.get("/api/user_data").then(function(data) {
-    renderGarden(data);  
- 
-  });
-}
+    $.get("/api/user_data").then(function (data) {
+      renderGarden(data);
+
+    });
+  }
   getPlants()
-
-
-  });
 
   function renderFilters() {
     for (i in filters) {
@@ -34,12 +30,11 @@ $(document).ready(function () {
       grid.append(title)
       for (index in column) {
         parameters = column[index]
-
         let newCheckbox = `<div class="checkbox"><label><input type="checkbox" name="type" value="${i}:${parameters}">${parameters}</label></div>`;
 
         grid.append(newCheckbox)
-
       }
+
       $("#filter").append(grid)
     }
   }
@@ -92,14 +87,12 @@ $(document).ready(function () {
     })
   })
 
-
   $(document).on("click", "#myGarden", function (e) {
     e.preventDefault();
 
     let addPlant = $(this).data("id")
 
     $.get("/api/id").then(function (data) {
-
       let newPlant = [
         { user: data.id },
         { toAdd: addPlant }
@@ -113,34 +106,34 @@ $(document).ready(function () {
           console.log("Post complete")
 
           getPlants()
-          
+
 
         }
       })
     });
     window.location.reload();
 
-});
+  });
 
 
-$(document).on("click","#delete",function(e) {
-  e.preventDefault();
+  $(document).on("click", "#delete", function (e) {
+    e.preventDefault();
 
-  let deletePlant = $(this).data("id")
+    let deletePlant = $(this).data("id")
 
-  $.ajax({
-    method: "DELETE",
-    url: "/api/plants/" + deletePlant
-  }).then(function(data) {
-    console.log("Deleted");
-    getPlants()
+    $.ajax({
+      method: "DELETE",
+      url: "/api/plants/" + deletePlant
+    }).then(function (data) {
+      console.log("Deleted");
+      getPlants()
 
 
-  })
+    })
 
-  window.location.reload();
+    window.location.reload();
 
-});
+  });
 
 
 
@@ -170,9 +163,7 @@ $(document).on("click","#delete",function(e) {
         div.append("<h2> Common Name: " + data[i].common_name + "</h2>");
         div.append("<p> Scientific Name: " + data[i].scientific_name + "</p>");
         div.append(`<img src="${data[i].image_url}" width="250" height="300">`);
-        // div.append("<p>" + data[i].State_and_Province + "</p>");
         div.append("<p> Growth Habit " + data[i].growth_habit + "</p>");
-        // div.append("<p>" + data[i].Plant_Guides + "</p>");
         div.append("<p> Active Growth Period " + data[i].active_growth_period + "</p>");
         div.append("<p> Flower Color: " + data[i].flower_color + "</p>");
         div.append("<p> Foliage Color: " + data[i].foliage_color + "</p>");
@@ -183,51 +174,27 @@ $(document).on("click","#delete",function(e) {
 
         $("#stats").append(div).append("<br>");
       }
-      
+
     }
   }
 
-  // In Process Need Fix Garden appending
+  //GARDEN JQUERY
+  function renderGarden(data) {
+    console.log(data);
+    if (data.length !== 0) {
+      $(".addItem").empty();
+      $(".addItem").show();
+      for (var i = 0; i < data.length; i++) {
 
-  
-// In Process Need Fix Garden appending
+        var div = $("<div>").attr("class", "col-md-4 border border-dark");
 
-  // $(document).on("click", "#addBtn" , function(e) {
-  //   e.preventDefault()
-  //   console.log("THY BUTTON IS WORKING SIR!");
-  // $.get("/api/search/", function(data) {
-  //   console.log(data);
-  //   renderGarden(data);
-  
-  // })
-  // })
+        div.append(`<img src="${data[i].image_url}" width="200" height="200">`);
+        div.append(`<button type="button" data-id="${data[i].id}" id="delete" class="btn btn-dark myGarden">Delete</button>`);
 
-
-    })
-  });
-
-//GARDEN JQUERY
-function renderGarden(data) {
-  console.log(data);
-  if (data.length !== 0) {
-    $(".addItem").empty();
-    $(".addItem").show();
-    for (var i = 0; i < data.length; i++) {
-
-      var div = $("<div>").attr("class", "col-md-4 border border-dark");
-      
-      div.append(`<img src="${data[i].image_url}" width="200" height="200">`);
-      div.append(`<button type="button" data-id="${data[i].id}" id="myGarden" class="btn btn-dark myGarden">Delete</button>`);
-      // div.append("<div>").attr("class","card mb-4 box-shadow");
-      // div.append("<img>").attr("class", "card-img-top");
-      // div.append("<div>").attr("class","card-body");
-      // div.append("<p> User Selection").attr("class", "card-text");
-      // div.append("<div>").attr("class", "d-flex justify-content-between align-items-center");
-      // div.append(`<button type="button" data-id="${data[i].id}" id="myGarden" class="btn btn-primary myGarden">Delete</button>`);
-      $(".addItem").append(div).append("<br>");
+        $(".addItem").append(div).append("<br>");
+      }
     }
   }
-}
 
   renderFilters()
 
