@@ -3,7 +3,7 @@ let db = require("../models");
 let passport = require("../config/passport");
 const { Sequelize } = require('sequelize');
 const { QueryTypes } = require('sequelize');
-const userPlant = require("../models/userPlant");
+
 
 
 
