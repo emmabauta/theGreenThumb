@@ -1,12 +1,6 @@
 $(document).ready(function() {
   console.log('member.js loaded')
 
-
-  let id;
-  let garden = $("#myGarden")
-  let searchForm = $("form.search")
-  let filterForm = $("form.filter")
-
   let filters = {
     growth_habit: ["Tree", "Forb/herb", "Vine", "Subshrub", "Graminoid", "Shrub"],
     active_growth_period: ["Spring", "Summer", "Year Round", "Fall", "Winter"],
@@ -18,11 +12,13 @@ $(document).ready(function() {
   // This file just does a GET request to figure out which user is logged in
   // and updates the HTML on the page
 
-
+  function getPlants() {
   $.get("/api/user_data").then(function(data) {
     renderGarden(data);  
  
   });
+}
+  getPlants()
 
 
   function renderFilters() {
@@ -115,10 +111,32 @@ $(document).ready(function() {
         data: JSON.stringify(newPlant),
         success: function(result) {
           console.log("Post complete")
+          getPlants()
+          
   
         }
       })
     });
+
+});
+
+
+$(document).on("click","#delete",function(e) {
+  e.preventDefault();
+
+  let deletePlant = $(this).data("id")
+
+  $.ajax({
+    method: "DELETE",
+    url: "/api/plants/" + deletePlant
+  }).then(function(data) {
+    console.log("Deleted");
+    getPlants()
+
+
+  })
+
+    
 
 });
 
@@ -163,6 +181,7 @@ $(document).ready(function() {
 
         $("#stats").append(div).append("<br>");
       }
+      
     }
   }
 
@@ -171,15 +190,15 @@ $(document).ready(function() {
   
 // In Process Need Fix Garden appending
 
-  $(document).on("click", "#addBtn" , function(e) {
-    e.preventDefault()
-    console.log("THY BUTTON IS WORKING SIR!");
-  $.get("/api/search/", function(data) {
-    console.log(data);
-    renderGarden(data);
+  // $(document).on("click", "#addBtn" , function(e) {
+  //   e.preventDefault()
+  //   console.log("THY BUTTON IS WORKING SIR!");
+  // $.get("/api/search/", function(data) {
+  //   console.log(data);
+  //   renderGarden(data);
   
-  })
-  })
+  // })
+  // })
 
   //GARDEN JQUERY
   function renderGarden(data) {
@@ -197,10 +216,11 @@ $(document).ready(function() {
         div.append("<div>").attr("class","card-body");
         div.append("<p> User Selection").attr("class", "card-text");
         div.append("<div>").attr("class", "d-flex justify-content-between align-items-center");
-        div.append(`<button type="button" data-id="${data[i].id}" id="myGarden" class="btn btn-primary myGarden">Delete</button>`);
+        div.append(`<button type="button" data-id="${data[i].id}" id="delete" class="btn btn-primary myGarden">Delete</button>`);
 
         $(".addItem").append(div).append("<br>");
       }
+      
     }
   }
 

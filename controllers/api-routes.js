@@ -56,6 +56,7 @@ module.exports = function(app) {
         if (data[i] == data[data.length -1]) {
               query += `id = ${newPlants};`
               db.sequelize.query(query, { type: QueryTypes.SELECT }).then((results) => {
+                console.log(results);
                 res.json(results)
               })
             }
@@ -166,11 +167,21 @@ module.exports = function(app) {
     })
   })
 
+  app.delete("/api/plants/:id", function(req, res) {
+    db.UserPlant.destroy({
+      where: {
+        PlantId: req.params.id
+      }
+    }).then((result) => {
+        res.json(result)
+    })
+  })
+
 
   function createQuery(filters) {
     let query = 'SELECT * FROM green_thumb.plants WHERE ';
 
-    if (searchedName) {
+    if (typeof searchedName !== '') {
       query += `(MATCH (common_name) AGAINST ("${searchedName}")) `;
     }
     if (filters.length > 0){
