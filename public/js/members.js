@@ -118,7 +118,7 @@ $(document).ready(function () {
         }
       })
     });
-
+    window.location.reload();
 
 });
 
@@ -138,7 +138,7 @@ $(document).on("click","#delete",function(e) {
 
   })
 
-    
+  window.location.reload();
 
 });
 
