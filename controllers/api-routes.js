@@ -62,19 +62,7 @@ module.exports = function(app) {
             }
             query += `id = ${newPlants} OR `
       }
-      
-      
 
-      // for (i in data) {
-      //   if (data[i] == data[data.length -1]) {
-      //     query += `(id = "${data[i]}");`
-      //     db.sequelize.query(query, { type: QueryTypes.SELECT }).then((results) => {
-      //       res.json(results)
-      //     })
-      //   }
-      //   query += `(id = "${data[i]}") AND `
-      // }
-      
     })
   }
 });
@@ -175,7 +163,17 @@ module.exports = function(app) {
     }).then((result) => {
         res.json(result)
     })
-  })
+  });
+
+  app.get("/api/modalData/:id", function(req,res) {
+    plants = req.params.id
+    let query = `SELECT * FROM green_thumb.plants WHERE (id = "${plants}");`;
+    db.sequelize.query(query, { type: QueryTypes.SELECT }).then((data) => {
+      console.log(data + "HEYOOOOOO");
+      res.json(data)
+    })
+  });
+
 
 
   function createQuery(filters) {
