@@ -1,3 +1,4 @@
+
 $(document).ready(function () {
   console.log('member.js loaded')
 
@@ -184,9 +185,11 @@ $(document).ready(function () {
     e.preventDefault();
     let plantInfo= $(this).data("id")
 
-    $.get("/api/modalData/"+ plantInfo).then(function (data) {
+   
 
+    $.get("/api/modalData/"+ plantInfo).then(function (data) {
       renderModal(data)
+      
     });
   });
 
@@ -196,12 +199,13 @@ $(document).ready(function () {
       $(".addItem").empty();
       $(".addItem").show();
       for (var i = 0; i < data.length; i++) {
-
+        
+        let target = `#examplemodal${data[i].id}`
         var div = $("<div>").attr("class", "col-md-4 ");
 
         div.append(`<img src="${data[i].image_url}" width="200" height="200">`);
 
-        div.append(`<button type="button" data-id="${data[i].id}" class="btn btn-dark" id="something" data-bs-toggle="modal" data-bs-target="#exampleModal">Plant Info</button>`);
+        div.append(`<button type="button" data-id="${data[i].id}" class="btn btn-dark" id="something" data-bs-toggle="modal" data-bs-target="#examplemodal">Plant Info</button>`);
         div.append(`<button type="button" data-id="${data[i].id}" id="delete" class="btn btn-dark myGarden" style="float: right;">Delete</button>`);
 
         $(".addItem").append(div).append("<br>");
@@ -213,9 +217,66 @@ $(document).ready(function () {
 
   function renderModal(data){
 
+    
+    let div = $("body")
+  
+      console.log(data);
+      let target = `exampleModal${data.id}`
+
+      console.log();
+      $(".modal-title").empty()
+      $('.modal-body').empty()
+
+      $(".modal-title").text(data.common_name)
+   
+      $('.modal-body').append(`<img src="${data.image_url}"  width=150 class="center"/>`);
+      $('.modal-body').append(`<p> Growth Habit: ${data.growth_habit}</p>`);
+      $('.modal-body').append(`<p> Active Growth Period: ${data.active_growth_period}</p>`);
+      $('.modal-body').append(`<p> Flower Color: ${data.flower_color}</p>`);
+      $('.modal-body').append(`<p> Foliage Color: ${data.foliage_color}</p>`);
+      $('.modal-body').append(`<p> Shade Tolerance: ${data.shade_tolerance}</p>`);
+      $('.modal-body').append(`<p> Bloom Period: ${data.bloom_period}</p>`);
+
+      // let modal = $(`<div class="modal fade" id="${target}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"></div>`);
+      // $('.fade').append(`<div id="mini" class="modal-dialog modal-dialog-centered"></div>`);
+      // $('.fade').append(`<div class="modal-content"></div>`);
+      // $('.fade').append(`<div class="modal-header"></div>`);
+      // $('.fade').append(`<h5 class="modal-title" id="exampleModalLabel">${data.common_name}</h5>`);
+      // $('.fade').append(`<div class="modal-body"></div>`);
+      // $('.fade').append(`<img src="${data.image_url}"  width=150 class="center"/>`);
+      // $('.fade').append(`<p> Growth Habit: ${data.growth_habit}</p>`);
+      // $('.fade').append(`<p> Active Growth Period: ${data.active_growth_period}</p>`);
+      // $('.fade').append(`<p> Flower Color: ${data.flower_color}</p>`);
+      // $('.fade').append(`<p> Foliage Color: ${data.foliage_color}</p>`);
+      // $('.fade').append(`<p> Shade Tolerance: ${data.shade_tolerance}</p>`);
+      // $('.fade').append(`<p> Bloom Period: ${data.bloom_period}</p>`);
+      // $('.fade').append(`<div class="modal-footer">`);
+      // $('.fade').append(`<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>`);
+    
+      div.append(modal)
 
   }
-
+  
   renderFilters()
 
 });
+
+
+
+
+
+// $('body').append(`<div class="modal fade" id="${target}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"></div>`);
+// $('.fade').append(`<div id="mini" class="modal-dialog modal-dialog-centered"></div>`);
+// $('.modal-dialog-centered').append(`<div class="modal-content"></div>`);
+// $('.modal-content').append(`<div class="modal-header"></div>`);
+// $('.modal-header').append(`<h5 class="modal-title" id="exampleModalLabel">${data[i].common_name}</h5>`);
+// $('.modal-content').append(`<div class="modal-body"></div>`);
+// $('.modal-body').append(`<img src="${data[i].image_url}"  width=150 class="center"/>`);
+// $('.modal-body').append(`<p> Growth Habit: ${data[i].growth_habit}</p>`);
+// $('.modal-body').append(`<p> Active Growth Period: ${data[i].active_growth_period}</p>`);
+// $('.modal-body').append(`<p> Flower Color: ${data[i].flower_color}</p>`);
+// $('.modal-body').append(`<p> Foliage Color: ${data[i].foliage_color}</p>`);
+// $('.modal-body').append(`<p> Shade Tolerance: ${data[i].shade_tolerance}</p>`);
+// $('.modal-body').append(`<p> Bloom Period: ${data[i].bloom_period}</p>`);
+// $('.modal-content').append(`<div class="modal-footer">`);
+// $('.modal-footer').
