@@ -2,8 +2,8 @@
 
 
 ## Description
+ The green thumb app let the user create his own personal garden by searching for any plant or flower from our database and pulling it's information. 
 
-Using the provided basic boilerplate for authentication with passport, handlebars, express, and sequelize, this application allows a user to sign up and login to the members portal. From there, they are able to access a database of various plants and their characteristics and habits in order to create a virtual garden specific to each user. 
 
 ## Table of Contents 
 
@@ -36,23 +36,18 @@ Contributors include Curt Spiegelhalter, Emma Dill, Luis Hernandez, and Remmingt
 
 Other users may not contribute to this repo.
 
-## Tests
 
-To run tests, run the following command:
-
-```
-npm test
-```
 
 ## Screenshots
 ![image](https://user-images.githubusercontent.com/73251656/107418938-3e49a180-6ae5-11eb-87e4-a7b63cfa9f4f.png)
 
 ![image](https://user-images.githubusercontent.com/73251656/107418495-ba8fb500-6ae4-11eb-973e-8c79b5e777b5.png)
 
+![image](public/Images/greenthumb.gif)
 
-### Deployed App Heroku Link
-<>
+## Link
 
+Deployed app: [The Green Thumb](https://thegreenthumb.herokuapp.com/)
 
 
 ## Questions
