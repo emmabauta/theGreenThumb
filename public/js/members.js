@@ -73,7 +73,9 @@ $(document).ready(function () {
       }
     }
     let searchValue = $("input#name-search").val().trim()
-    if (searchValue) {
+    if (searchValue !== "object") {
+     
+
       categories.push(searchValue)
     }
     $.ajax({
