@@ -218,8 +218,9 @@ module.exports = function(app) {
 
   function createQuery(filters) {
     let query = 'SELECT * FROM green_thumb.plants WHERE ';
+    console.log(searchedName);
 
-    if (typeof searchedName !== '') {
+    if (typeof searchedName !== "object" && searchedName.length > 0) {
       query += `(MATCH (common_name) AGAINST ("${searchedName}")) `;
     }
     if (filters.length > 0){
