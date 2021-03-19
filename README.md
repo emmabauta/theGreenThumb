@@ -51,7 +51,7 @@ npm test
 
 
 ### Deployed App Heroku Link
-<>
+https://thegreenthumb.herokuapp.com/
 
 
 
